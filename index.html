@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sensei</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Sawarabi+Mincho&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0a00;
+    --gold: #c9933a;
+    --gold-light: #f0c060;
+    --red: #c0392b;
+    --red-dark: #8b1a10;
+    --cream: #f5eed8;
+    --paper: #ece3c1;
+    --shadow: #3d1c00;
+    --bamboo: #4a7c3f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--ink);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,147,58,0.04) 60px, rgba(201,147,58,0.04) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,147,58,0.04) 60px, rgba(201,147,58,0.04) 61px);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── BANNER ── */
+  .banner {
+    position: relative;
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 40%, #a93226 70%, var(--red-dark) 100%);
+    text-align: center;
+    padding: 60px 20px 50px;
+    overflow: hidden;
+    border-bottom: 4px solid var(--gold);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  .banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255,200,50,0.08) 0%, transparent 70%),
+      repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(0,0,0,0.05) 20px, rgba(0,0,0,0.05) 21px);
+  }
+  .banner-kanji {
+    position: absolute;
+    font-size: 180px;
+    color: rgba(0,0,0,0.12);
+    font-weight: 900;
+    top: -20px; left: 20px;
+    line-height: 1;
+    user-select: none;
+  }
+  .banner-kanji-right {
+    right: 20px; left: auto;
+    bottom: -20px; top: auto;
+  }
+  .banner-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    text-shadow: 0 0 30px rgba(240,192,96,0.5), 3px 3px 0 var(--red-dark), 6px 6px 0 rgba(0,0,0,0.3);
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 1;
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%,100% { text-shadow: 0 0 20px rgba(240,192,96,0.4), 3px 3px 0 var(--red-dark); }
+    50% { text-shadow: 0 0 50px rgba(240,192,96,0.8), 3px 3px 0 var(--red-dark); }
+  }
+  .banner-divider {
+    width: 200px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    margin: 16px auto;
+    position: relative; z-index: 1;
+  }
+  .banner-message {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: clamp(1rem, 2.8vw, 1.6rem);
+    color: var(--cream);
+    letter-spacing: 0.15em;
+    position: relative; z-index: 1;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  }
+  .banner-message span {
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .section-header h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201,147,58,0.4);
+    letter-spacing: 0.1em;
+  }
+  .section-line {
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 10px auto 0;
+  }
+
+  /* ── SLAP COUNTER ── */
+  .slap-box {
+    background: linear-gradient(160deg, #1f1005, #2d1508);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 40px rgba(201,147,58,0.15), inset 0 0 30px rgba(0,0,0,0.4);
+  }
+  .slap-box::before {
+    content: '掌';
+    position: absolute;
+    font-size: 120px;
+    color: rgba(201,147,58,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .slap-number {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(4rem, 14vw, 9rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(240,192,96,0.5);
+    transition: transform 0.1s ease, color 0.2s;
+    display: inline-block;
+    position: relative; z-index: 1;
+  }
+  .slap-number.slap-hit {
+    transform: scale(1.2) rotate(-3deg);
+    color: #fff;
+  }
+  .slap-number.slap-down {
+    transform: scale(0.85);
+    color: var(--red);
+  }
+  .slap-label {
+    color: rgba(245,238,216,0.6);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .slap-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    position: relative; z-index: 1;
+    flex-wrap: wrap;
+  }
+  .btn-slap {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    padding: 14px 32px;
+    border-radius: 3px;
+    letter-spacing: 0.1em;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-slap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.15s;
+  }
+  .btn-slap:active::after { background: rgba(255,255,255,0.15); }
+  .btn-slap-add {
+    background: linear-gradient(135deg, var(--red-dark), var(--red));
+    color: var(--gold-light);
+    box-shadow: 0 4px 20px rgba(192,57,43,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .btn-slap-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(192,57,43,0.7);
+  }
+  .btn-slap-add:active { transform: translateY(1px) scale(0.97); }
+  .btn-slap-remove {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: rgba(245,238,216,0.7);
+    border: 1px solid rgba(201,147,58,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  }
+  .btn-slap-remove:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    color: var(--cream);
+  }
+  .btn-slap-remove:active { transform: translateY(1px) scale(0.97); }
+  .slap-hand {
+    font-size: 2rem;
+    margin-right: 8px;
+    display: inline-block;
+    transition: transform 0.1s;
+  }
+  .slap-emoji-fly {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    animation: flyEmoji 0.8s ease-out forwards;
+    z-index: 9999;
+  }
+  @keyframes flyEmoji {
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(var(--rot)); }
+  }
+
+  /* ── JOKE BOX ── */
+  .joke-box {
+    background: linear-gradient(160deg, #1a0e02, #251508);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 36px 30px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(201,147,58,0.12), inset 0 0 30px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .joke-box::before {
+    content: '笑';
+    position: absolute;
+    font-size: 120px;
+    color: rgba(201,147,58,0.05);
+    top: 50%; right: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .joke-counter {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: rgba(201,147,58,0.6);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .joke-text {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    color: var(--cream);
+    line-height: 1.8;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    padding: 0 10px;
+  }
+  .joke-text.fade { opacity: 0; }
+  .btn-joke {
+    margin-top: 24px;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2a1a00, #3d2600);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 12px 28px;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(201,147,58,0.2);
+  }
+  .btn-joke:hover {
+    background: var(--gold);
+    color: var(--ink);
+    box-shadow: 0 0 25px rgba(201,147,58,0.5);
+    transform: translateY(-1px);
+  }
+  .joke-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-joke-nav {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    background: transparent;
+    color: rgba(201,147,58,0.5);
+    border: 1px solid rgba(201,147,58,0.25);
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-joke-nav:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ── PANDA BOX ── */
+  .panda-box {
+    background: linear-gradient(160deg, #0d150d, #111e11);
+    border: 2px solid #4a7c3f;
+    border-radius: 4px;
+    padding: 36px 30px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(74,124,63,0.12), inset 0 0 30px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .panda-section-header h2 { color: #6abf5e; }
+  .panda-section-header .section-line {
+    background: linear-gradient(90deg, transparent, #6abf5e, transparent);
+  }
+  .panda-box::before {
+    content: '熊猫';
+    position: absolute;
+    font-size: 80px;
+    color: rgba(74,124,63,0.07);
+    bottom: 10px; left: 15px;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .panda-emoji {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    display: block;
+    animation: pandaSway 4s ease-in-out infinite;
+  }
+  @keyframes pandaSway {
+    0%,100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+  .panda-counter {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: rgba(74,124,63,0.7);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .panda-text {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    color: var(--cream);
+    line-height: 1.9;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    padding: 0 10px;
+  }
+  .panda-text.fade { opacity: 0; }
+  .btn-panda {
+    margin-top: 24px;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0a1a0a, #152515);
+    color: #6abf5e;
+    border: 1px solid #4a7c3f;
+    padding: 12px 28px;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(74,124,63,0.2);
+  }
+  .btn-panda:hover {
+    background: #4a7c3f;
+    color: #fff;
+    box-shadow: 0 0 25px rgba(74,124,63,0.5);
+    transform: translateY(-1px);
+  }
+  .panda-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-panda-nav {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    background: transparent;
+    color: rgba(74,124,63,0.5);
+    border: 1px solid rgba(74,124,63,0.25);
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-panda-nav:hover { color: #6abf5e; border-color: #4a7c3f; }
+
+  /* ── PHILOSOPHY BOX ── */
+  .philosophy-box {
+    background: linear-gradient(135deg, #0e0e1a 0%, #161628 50%, #0e0e1a 100%);
+    border: 2px solid rgba(201,147,58,0.5);
+    border-radius: 4px;
+    padding: 44px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(130,80,200,0.1), 0 0 30px rgba(201,147,58,0.1), inset 0 0 40px rgba(0,0,0,0.5);
+  }
+  .philosophy-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(120,80,200,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .philosophy-box::after {
+    content: '道';
+    position: absolute;
+    font-size: 200px;
+    color: rgba(201,147,58,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .philosophy-label {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(0.7rem, 1.8vw, 1rem);
+    letter-spacing: 0.35em;
+    color: rgba(201,147,58,0.6);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    position: relative; z-index: 1;
+  }
+  .philosophy-pillars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .philosophy-pillar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 28px;
+    border: 1px solid rgba(201,147,58,0.2);
+    border-radius: 3px;
+    background: rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+    min-width: 120px;
+  }
+  .philosophy-pillar:hover {
+    border-color: var(--gold);
+    background: rgba(201,147,58,0.06);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(201,147,58,0.15);
+  }
+  .pillar-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+    animation: pillarFloat 3s ease-in-out infinite;
+  }
+  .philosophy-pillar:nth-child(1) .pillar-icon { animation-delay: 0s; }
+  .philosophy-pillar:nth-child(3) .pillar-icon { animation-delay: 0.8s; }
+  .philosophy-pillar:nth-child(5) .pillar-icon { animation-delay: 1.6s; }
+  @keyframes pillarFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .pillar-text {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 20px rgba(240,192,96,0.3);
+  }
+  .pillar-sep {
+    color: rgba(201,147,58,0.35);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: rgba(201,147,58,0.3);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    border-top: 1px solid rgba(201,147,58,0.1);
+  }
+
+  /* ── SEPARATORS ── */
+  .sep {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .sep-line { flex: 1; height: 1px; background: rgba(201,147,58,0.2); }
+  .sep-diamond { color: var(--gold); font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-kanji">師</div>
+  <div class="banner-kanji banner-kanji-right">道</div>
+  <div class="banner-title">The Sensei</div>
+  <div class="banner-divider"></div>
+  <div class="banner-message">Always Remember that Your Mini Me is <span>6'0 - 6'1</span></div>
+</div>
+
+<!-- SLAP COUNTER -->
+<div class="section-wrap">
+  <div class="section-header">
+    <h2>⚡ Slap Counter</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="slap-box">
+    <div id="slapNumber" class="slap-number">0</div>
+    <div class="slap-label">Slaps Administered</div>
+    <div class="slap-buttons">
+      <button class="btn-slap btn-slap-add" onclick="slap(event)">
+        <span class="slap-hand">👋</span> SLAP
+      </button>
+      <button class="btn-slap btn-slap-remove" onclick="unslap()">
+        ↩ Undo
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="sep"><div class="sep-line"></div><div class="sep-diamond">◆</div><div class="sep-line"></div></div>
+
+<!-- JOKE BOX -->
+<div class="section-wrap">
+  <div class="section-header">
+    <h2>😄 Joke of the Moment</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="joke-box">
+    <div class="joke-text" id="jokeText">Loading a joke...</div>
+    <button class="btn-joke" onclick="nextJoke()">Next Joke →</button>
+    <div class="joke-nav">
+      <button class="btn-joke-nav" onclick="prevJoke()">← Previous</button>
+      <button class="btn-joke-nav" onclick="randomJoke()">🎲 Random</button>
+    </div>
+  </div>
+</div>
+
+<div class="sep"><div class="sep-line"></div><div class="sep-diamond">◆</div><div class="sep-line"></div></div>
+
+<!-- PHILOSOPHY BOX -->
+<div class="section-wrap">
+  <div class="philosophy-box">
+    <div class="philosophy-label">Mini Me's Life Philosophy</div>
+    <div class="philosophy-pillars">
+      <div class="philosophy-pillar">
+        <div class="pillar-icon">🥗</div>
+        <div class="pillar-text">Eat Clean</div>
+      </div>
+      <div class="pillar-sep">✦</div>
+      <div class="philosophy-pillar">
+        <div class="pillar-icon">✈️</div>
+        <div class="pillar-text">Travel</div>
+      </div>
+      <div class="pillar-sep">✦</div>
+      <div class="philosophy-pillar">
+        <div class="pillar-icon">😂</div>
+        <div class="pillar-text">Laugh Lots</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"><div class="sep-line"></div><div class="sep-diamond">◆</div><div class="sep-line"></div></div>
+
+<!-- PANDA FACTS -->
+<div class="section-wrap">
+  <div class="section-header panda-section-header">
+    <h2>🐼 Panda Fact File</h2>
+    <div class="section-line" style="background:linear-gradient(90deg,transparent,#6abf5e,transparent)"></div>
+  </div>
+  <div class="panda-box">
+    <span class="panda-emoji">🐼</span>
+    <div class="panda-counter" id="pandaCounter">Fact #1 of 80</div>
+    <div class="panda-text" id="pandaText">Loading a panda fact...</div>
+    <button class="btn-panda" onclick="nextPanda()">Next Fact →</button>
+    <div class="panda-nav">
+      <button class="btn-panda-nav" onclick="prevPanda()">← Previous</button>
+      <button class="btn-panda-nav" onclick="randomPanda()">🎲 Random</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  ☯ The Sensei — Wisdom, Laughter & Pandas ☯
+</footer>
+
+<script>
+// ── SLAP COUNTER ──
+let slapCount = parseInt(localStorage.getItem('slapCount')) || 0;
+const slapEl = document.getElementById('slapNumber');
+slapEl.textContent = slapCount;
+
+function slap(e) {
+  slapCount++;
+  slapEl.textContent = slapCount;
+  localStorage.setItem('slapCount', slapCount);
+  slapEl.classList.remove('slap-hit', 'slap-down');
+  void slapEl.offsetWidth;
+  slapEl.classList.add('slap-hit');
+  setTimeout(() => slapEl.classList.remove('slap-hit'), 300);
+  spawnEmoji(e.clientX, e.clientY);
+}
+function unslap() {
+  if (slapCount > 0) {
+    slapCount--;
+    slapEl.textContent = slapCount;
+    localStorage.setItem('slapCount', slapCount);
+    slapEl.classList.remove('slap-hit', 'slap-down');
+    void slapEl.offsetWidth;
+    slapEl.classList.add('slap-down');
+    setTimeout(() => slapEl.classList.remove('slap-down'), 300);
+  }
+}
+function spawnEmoji(x, y) {
+  const emojis = ['👋','💥','✨','⚡','🌟','😵','💫'];
+  for (let i = 0; i < 3; i++) {
+    const el = document.createElement('div');
+    el.className = 'slap-emoji-fly';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    const angle = (Math.random() * 360) * Math.PI / 180;
+    const dist = 60 + Math.random() * 80;
+    el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    el.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
+    el.style.animationDelay = (i * 80) + 'ms';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+}
+
+// ── JOKES ──
+const jokes = [
+  "Why don't scientists trust atoms? Because they make up everything.",
+  "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+  "Why don't eggs tell jokes? They'd crack each other up.",
+  "I'm reading a book about anti-gravity. It's impossible to put down.",
+  "Did you hear about the mathematician who's afraid of negative numbers? He'll stop at nothing to avoid them.",
+  "Why did the scarecrow win an award? Because he was outstanding in his field.",
+  "I used to hate facial hair, but then it grew on me.",
+  "Why did the bicycle fall over? Because it was two-tired.",
+  "What do you call cheese that isn't yours? Nacho cheese.",
+  "I would tell you a joke about construction, but I'm still working on it.",
+  "Why can't you give Elsa a balloon? Because she'll let it go.",
+  "What do you call a fake noodle? An impasta.",
+  "I'm on a seafood diet. I see food and I eat it.",
+  "Why did the coffee file a police report? It got mugged.",
+  "What do you call a sleeping dinosaur? A dino-snore.",
+  "I told my doctor that I broke my arm in two places. He told me to stop going to those places.",
+  "Why don't skeletons fight each other? They don't have the guts.",
+  "What do you get when you cross a snowman with a vampire? Frostbite.",
+  "I asked the librarian if they had books about paranoia. She whispered, 'They're right behind you!'",
+  "What do you call a bear with no teeth? A gummy bear.",
+  "Why do cows wear bells? Because their horns don't work.",
+  "What's a vampire's favourite fruit? A blood orange.",
+  "How do you organize a space party? You planet.",
+  "Why did the golfer bring extra pants? In case he got a hole in one.",
+  "What do you call a factory that makes okay products? A satisfactory.",
+  "I used to be a banker, but I lost interest.",
+  "Why is Peter Pan always flying? He Neverlands.",
+  "What did the ocean say to the beach? Nothing, it just waved.",
+  "Why couldn't the leopard play hide and seek? Because he was always spotted.",
+  "What do you call a parade of rabbits hopping backwards? A receding hare-line.",
+  "Why did the tomato turn red? Because it saw the salad dressing.",
+  "What do you call a lazy kangaroo? A pouch potato.",
+  "I have a joke about construction paper, but I'll just wrap it up.",
+  "Why can't a nose be 12 inches long? Because then it would be a foot.",
+  "What do elves learn in school? The elf-abet.",
+  "How does a penguin build its house? Igloos it together.",
+  "What do you call a shoe made from a banana? A slipper.",
+  "Why did the student eat his homework? Because the teacher told him it was a piece of cake.",
+  "What do you call a pony with a sore throat? A little horse.",
+  "Why are ghosts bad liars? Because you can see right through them.",
+  "What's brown and sticky? A stick.",
+  "I got a job at a bakery because I kneaded the dough.",
+  "Why do bees have sticky hair? Because they use honeycombs.",
+  "What do you call a fish without eyes? A fsh.",
+  "Why did the gym close down? It just didn't work out.",
+  "I tried to write a chemistry joke but couldn't find the right formula.",
+  "What do you call an alligator in a vest? An in-vest-igator.",
+  "I'm friends with all electricians. We have good current connections.",
+  "What happens when a frog's car breaks down? It gets toad away.",
+  "Why did the nurse need a red pen at work? In case she needed to draw blood.",
+  "I don't trust stairs. They're always up to something.",
+  "Did you hear about the claustrophobic astronaut? He just needed a little space.",
+  "What do you call a pig that does karate? A pork chop.",
+  "Why couldn't the pirate learn the alphabet? He kept getting lost at C.",
+  "I just watched a documentary about beavers. Best dam show I've ever seen.",
+  "What do you call a snowman with a six-pack? An abdominal snowman.",
+  "Why did the teddy bear say no to dessert? Because she was already stuffed.",
+  "What did the Buddhist say to the hot dog vendor? Make me one with everything.",
+  "I burned 2000 calories today. That's the last time I leave brownies in the oven.",
+  "Why do seagulls fly over the ocean? Because if they flew over the bay, they'd be bagels.",
+  "What do you call a man with a rubber toe? Roberto.",
+  "Why don't scientists trust atoms? Because they make up everything… still funny.",
+  "How do you make holy water? Boil the hell out of it.",
+  "What do you call a line of men waiting for a haircut? A barber queue.",
+  "Why did the invisible man turn down the job offer? He couldn't see himself doing it.",
+  "What do you call a pile of cats? A meowtain.",
+  "I tried to come up with a joke about vegetables, but lettuce not go there.",
+  "Why do melons have fancy weddings? Because they cantaloupe.",
+  "I told my wife she should embrace her mistakes. She gave me a hug.",
+  "Why don't some couples go to the gym? Because some relationships don't work out.",
+  "What do you call a dog magician? A labracadabrador.",
+  "Why did the picture go to jail? Because it was framed.",
+  "I'm reading a book on the history of glue – can't put it down.",
+  "What do you call a very small valentine? A valen-tiny.",
+  "Why did the calendar go to therapy? It had too many dates.",
+  "What do you call an honest insect? A praying mantis. Wait, that's not right.",
+  "I would tell you a pizza joke but it's too cheesy.",
+  "What do you call a sleeping bull? A bulldozer.",
+  "Why was the math book sad? It had too many problems.",
+  "How do mountains see? They peak.",
+  "Why are bananas never lonely? Because they hang around in bunches.",
+  "What did one hat say to the other? You stay here; I'll go on ahead.",
+  "Why do fish swim in salt water? Because pepper makes them sneeze.",
+  "I went to a seafood disco last week and pulled a mussel.",
+  "What do you call a deer with no eyes? No idea.",
+  "Why did the golfer wear two pairs of pants? In case he got a hole in one.",
+  "What do you call a group of musical whales? An orca-stra.",
+  "Did you hear about the guy who invented Lifesavers? He made a mint.",
+  "I have a lot of jokes about retired people, but none of them work.",
+  "Why did the nurse keep a red pen? To draw blood.",
+  "What did one plate say to the other? Dinner's on me.",
+  "Why are frogs so happy? They eat whatever bugs them.",
+  "I couldn't figure out how lightning works, then it struck me.",
+  "Why did the tomato blush? It saw the salad dressing.",
+  "What do you call a hippie's wife? Mississippi.",
+  "Why don't some fish play piano? You can't tuna fish.",
+  "What's the best time to go to the dentist? Tooth-hurty.",
+  "I asked a Frenchman if he played video games. He said, 'Wii.'",
+  "Why can't you hear a pterodactyl go to the bathroom? Because the 'p' is silent.",
+  "What do you call a group of crows? Attempted murder. Because one murder isn't enough.",
+  "Why do we tell actors to break a leg? Because every play has a cast.",
+  "I'm writing a book about hurricanes and tornadoes. It's a whirlwind story.",
+  "What did the left eye say to the right eye? Between you and me, something smells.",
+  "Why was the stadium hot after the game? All the fans left.",
+  "What has ears but cannot hear? A cornfield.",
+  "Why did the scarecrow become a successful neurosurgeon? He was outstanding in his field.",
+  "I used to play piano by ear, but now I use my hands.",
+  "Why was the music teacher locked out? His keys were inside.",
+  "What do you call a sleeping T-Rex? A dino-snore.",
+  "Did you hear about the cheese factory explosion? The only thing left was de-brie.",
+  "What do lawyers wear to court? Lawsuits.",
+  "Why did the golfer bring two pairs of pants? In case he got a hole in one. (still funny)",
+  "What kind of music do mummies listen to? Wrap music.",
+  "Why did the kid throw the butter out the window? To see a butter-fly.",
+  "What's the difference between a piano and a fish? You can tune a piano, but you can't tuna fish.",
+  "Why can't male ants sink? They're buoy-ant.",
+  "I'm writing a song about a tortilla. Well, it's more of a wrap.",
+  "Why did the frog take the bus to work? His car got toad.",
+  "What do you call a boomerang that won't come back? A stick.",
+  "I went to see a band with 999 members. One Thousand Oaks? No, they only had 999.",
+  "Why don't ants get sick? Because they have little ant-ibodies.",
+  "What do you call cheese that isn't yours? Nacho cheese. (Still nacho cheese.)",
+  "Why do cows go to New York? To see the moosicals.",
+  "I'd tell you a joke about a broken pencil, but it's pointless.",
+  "What do you call a snail on a ship? A snailor.",
+  "Why did the bacteria break up with the virus? Because they had no chemistry.",
+  "What do you call an elephant that doesn't matter? An irrelephant.",
+  "Why don't mountains get cold in winter? They wear snowcaps.",
+  "How do trees get on the internet? They log in.",
+  "What do you call a line of rabbits walking backward? A receding hare-line. Version 2.",
+  "Why did the belt go to jail? For holding up a pair of pants.",
+  "I wanted to learn to juggle, but I couldn't keep it up.",
+  "What did the drummer call his twin daughters? Anna One, Anna Two.",
+  "Why do bananas have to apply sunscreen? Because they peel.",
+  "I had a dream I was a car muffler. I woke up exhausted.",
+  "What do you call an ant who fights crime? A vigil-ant-e.",
+  "Why don't mountains get lonely? They have so many fans.",
+  "What did the judge say to the dentist? Do you swear to pull the tooth, the whole tooth, and nothing but the tooth?",
+  "I have a fear of elevators, but I'm taking steps to avoid it.",
+  "Why did the nurse carry a red pen? To draw blood. (Version 2 – still draws blood.)",
+  "What do you call a joke that isn't funny? A sentence.",
+  "Why do we tell actors to break a leg? Every play has a cast.",
+  "What did the big bucket say to the small bucket? You look a little pail.",
+  "Why did the bee get married? Because she found her honey.",
+  "I tried to share a vegetable joke, but this isn't the right thyme.",
+  "What do you call a fake spaghetti? An impasta. (Still impasta.)",
+  "Why did the math teacher break up with the biology teacher? There was no chemistry.",
+  "What do you call an overweight psychic? A four-chin teller.",
+  "Why did the scarecrow get a promotion? He was outstanding in his field. (Third time.)",
+  "I told my cat a joke about dogs. He didn't laugh — but then again, cats never do.",
+  "What do you call a dinosaur with a vocabulary? A thesaurus.",
+  "Why did the tree go to the dentist? To get its roots checked.",
+  "What do you get when you cross a snowman with a vampire? Frostbite. (Still cold.)",
+  "I tried to come up with a chemistry joke but couldn't find the right formula. (Take 2.)",
+  "Why do birds fly south for the winter? Because it's too far to walk.",
+  "What do you call a grumpy cow? Moo-dy.",
+  "Why did the cookie go to the doctor? It was feeling crummy.",
+  "What's a skeleton's least favourite room? The living room.",
+  "Why did the music teacher need a ladder? To reach the high notes.",
+  "What do you call a group of singing lawyers? A sue-prano.",
+  "Why are computer scientists so good at it? Because they know all the bits.",
+  "What do you call a snobbish criminal going down stairs? A condescending con descending.",
+  "How do you spot a blind man at a nudist beach? It's not hard.",
+  "Why did the pirate go to school? To improve his argh-ticulation.",
+  "I'm trying to write a joke about clocks, but I can't find the right time.",
+  "What did one firefly say to the other? You glow, girl.",
+  "Why don't scientists trust atoms? Because they make up literally everything.",
+  "What do you call a nervous javelin thrower? Shakespeare.",
+  "Why was the calendar so popular? Because it always had plenty of dates.",
+  "What do you call a happy lumberjack? A tree-mendous fellow.",
+  "Why can't you give Elsa a balloon? She'll let it go. (encore)",
+  "I'm reading a great book about teleportation — it's bound to take you places.",
+  "What did the DNA say to the other DNA? Do these genes make my butt look big?",
+  "Why do potatoes make good detectives? Because they keep their eyes peeled.",
+  "What's the opposite of irony? Wrinkly.",
+  "Why did the man name his dogs Rolex and Timex? Because they were watch dogs.",
+  "I don't trust atoms anymore. My friend said they make up everything, and I believed him.",
+  "What do you call a fish wearing a crown? King of the sea-bass.",
+  "Why did the orange stop halfway up the hill? It ran out of juice.",
+  "What do you call a camel without humps? Humphrey.",
+  "How do you make a tissue dance? Put a little boogie in it.",
+  "Why did the nurse ask for a pencil? To draw a blood sample.",
+  "What do you call a panda who can't stop telling lies? A bear-faced liar.",
+  "What do you call a dinosaur that crashes their car? Tyrannosaurus wrecks.",
+  "Why did the golfer carry an extra pair of socks? In case he got a hole in one.",
+  "What do you call a dog that can do magic tricks? A labracadabrador.",
+  "I used to hate gardening, but I've really grown into it.",
+  "Why do birds sing in the morning? Because they don't have alarm clocks.",
+  "What do you call a man stuck inside a wall? Hugh.",
+  "I bought some shoes from a drug dealer. I don't know what he laced them with, but I was tripping all day.",
+  "Why did the robber take a bath? Because he wanted to make a clean getaway.",
+  "What do you call a broken can opener? A can't opener.",
+  "Why do we drink water? Because otters have taken over the soda supply.",
+  "What do you call a spider on a computer? A web developer.",
+  "Why did the hipster burn his tongue? He drank his coffee before it was cool.",
+  "What do you call a sad cup of coffee? Depresso.",
+  "Why did the Easter egg hide? Because it was a little chicken.",
+  "What do you call a ghost's true love? His ghoul-friend.",
+  "Why did the gym close? It just didn't work out.",
+  "What do you call a factory that produces acceptable products? Satisfactory.",
+  "Why do the French only eat one egg? Because in France, one egg is un oeuf.",
+  "What do you call a group of disorganized cats? A cat-astrophe.",
+  "Why do we put candles on top of a birthday cake? Because it's too hard to put them on the bottom.",
+  "What do you call a man with a seagull on his head? Cliff.",
+  "Why was the broom late? It swept in.",
+  "What do you call a potato that bullies other vegetables? A dictator.",
+  "Why can't you play poker in the jungle? Too many cheetahs.",
+  "I had a dream I was drowning in orange soda. It was a Fanta sea.",
+  "What do you call a man who can't stand? Neil.",
+  "Why did the lemon stop rolling down the hill? It ran out of juice.",
+  "What do you call a crocodile wearing a vest? An in-vest-igator.",
+  "Why did the banana go to the doctor? It wasn't peeling well.",
+  "What do you call a crab who throws things? A lobster.",
+  "Why don't lobsters share? Because they're shellfish.",
+  "What do you call a deer with no eyes and no legs? Still no idea.",
+  "Why did the clock go to the therapist? It had too many second thoughts.",
+  "What do you call a sleeping dinosaur on a Sunday? Brunch.",
+  "Why don't scientists trust atoms? Seriously, they make up everything.",
+  "What do you call a fake stone in Ireland? A sham-rock.",
+  "Why did the teacher wear sunglasses to school? She had bright students.",
+  "What do you call a man hiding in a pile of leaves? Russell.",
+  "Why do accountants make great lovers? They're good with figures.",
+  "What do you call a woman who stands in the middle of a tennis court? Annette.",
+  "Why did the banana lose the debate? It split under pressure.",
+  "What do you call a donkey with three legs? A wonky donkey.",
+  "Why did the chicken cross the playground? To get to the other slide.",
+  "What do you call a fish with no eyes? A fsh. (encore performance)",
+  "Why do ducks make great journalists? They always find the down-low.",
+  "What do you call a caveman's fart? A blast from the past.",
+  "Why was the broom promoted? Because it swept the competition.",
+  "What do you call a sleeping bull? A bulldozer. (second nap)",
+  "Why do clocks always run clockwise? Because if they ran the other way, they'd be counter-productive.",
+  "What do you call a man who can't keep his pants up? Nick.",
+  "Why did the ant run so fast across the keyboard? Because it was looking for the escape key.",
+  "What do you call a laughing jar of mayonnaise? LMAYO.",
+  "Why don't skeletons ever argue? They don't have the guts.",
+  "What do you call a witch's motorcycle? A broooom.",
+  "Why do scientists make poor lovers? They have too many experiments on their hands.",
+  "What do you call a belt made of dollar bills? A waist of money.",
+  "Why did the math teacher break down? Too many problems.",
+  "What do you call a sleepy pea? A nap-o.",
+  "Why did the cookie go to the doctor? It felt crummy. (second checkup)",
+  "What do you call a sleeping volcano? Lava-ndula.",
+  "Why did the lamp get an award? Because it was outstanding in its field of light.",
+  "What do you call a monkey who loves potato chips? A chipmunk.",
+  "Why did the shoe go to school? To get a little sole.",
+  "What do you call a snake who works for the government? A civil serpent.",
+  "Why don't mountains ever get tired? Because they peak early.",
+  "What do you call a man hiding behind a car? Jack.",
+  "Why did the volleyball player go to the bank? To improve their net worth.",
+  "What do you call two thieves? A pair of nickers.",
+  "Why did the library have so many levels? Because the stories kept stacking up.",
+  "What do you call a king who's exactly 12 inches tall? A ruler.",
+  "Why do ducks tell jokes? Because they have a great bill of comedy.",
+  "What do you call a baby monkey? A chimp off the old block.",
+  "Why did the computer take aspirin? It had a virus.",
+  "What do you call a very fast fungus? A mush-vroom.",
+  "Why did the scarecrow win the Nobel Prize? He was out-standing in his field of research.",
+  "What do you call a bear that's caught in the rain? A drizzly bear.",
+  "Why don't pigs use computers? Because they always hog the keyboard.",
+  "What do you call a bucket full of honesty? A truthful pail.",
+  "Why did the football coach shake the vending machine? He wanted to get a quarterback.",
+  "What do you call a cat that gets everything it wants? Purrsuasive.",
+  "Why did the cowboy get a dachshund? Someone told him to get a long little doggy.",
+  "What do you call a sleeping cheese? Edam-asleep.",
+  "Why did the stadium fill up slowly? Because the crowd took its seats.",
+  "What do you call a very small witch? Minimum hex.",
+  "Why was the guitar teacher arrested? For fingering A-minor.",
+  "What do you call a really long parade? A march-athon.",
+  "Why did the grapefruit stop rolling? It ran out of citrus.",
+  "What do you call a bear with sunburn? A solar bear.",
+  "Why did the shoe need stitches? Because it had a sole injury.",
+  "What do you call a laughing motorcycle? A Yamaha-haha.",
+  "Why did the invisible man break up with his invisible girlfriend? He just couldn't see it working.",
+  "What do you call a fancy fish? So-fish-ticated.",
+  "Why did the dog sit in the shade? It didn't want to be a hot dog.",
+  "What do you call a peanut in outer space? An astro-nut.",
+  "Why are teddy bears never hungry? Because they're already stuffed.",
+  "What do you call a bee that lives in America? A USB.",
+  "Why don't oysters share? Because they're shellfish too.",
+  "What do you call a bunch of chess players bragging in a hotel lobby? Chess nuts boasting in an open foyer.",
+  "Why did the nurse keep a red pen again? STILL drawing blood.",
+  "What do you call a duck that gets all A's? A wise-quacker.",
+  "Why did the golfer keep sneezing? He had a birdie in his nose.",
+  "What do you call a laughing calculator? A fun-ction.",
+  "Why did the ocean go on a diet? To reduce its water weight.",
+  "What do you call a polite letter? A nota-tious gesture.",
+  "Why did the frog call his insurance company? He had a jump in his car.",
+  "What do you call a horse that lives next door? A neigh-bour.",
+  "Why did the dog eat the clock? It wanted a second helping.",
+  "What do you call a man who tells bad puns? Groan-up.",
+  "Why did the balloon artist retire? His career just lost its air.",
+  "What do you call a parrot that flew away? Poly-gone.",
+  "Why is a bad joke like a pencil? It has no point.",
+  "What do you call cheese that isn't yours in space? Nacho satellite.",
+  "Why did the newspaper go to therapy? It had too many issues.",
+  "What do you call a sleeping computer? A nap-top.",
+  "Why did the kangaroo stop drinking coffee? She had too much jumpy energy.",
+  "What do you call a pile of kittens? A meow-ntain.",
+  "Why don't eggs tell jokes on the weekend? They don't want to crack under pressure.",
+  "What do you call an educated tube? A graduated cylinder.",
+  "Why was the lemon so upset? People were always squeezing it.",
+  "What do you call a well-dressed lion? A dandy-lion.",
+  "Why can't basketball players go on vacation? They'd get called for travelling.",
+  "What do you call a fish with a sword? A swords-fish.",
+  "Why did the rope lose the argument? It was always getting tied up.",
+  "What do you call a plant that lies? A fib-ula.",
+  "Why do elephants never use computers? Because they're afraid of the mouse.",
+  "What do you call a dinosaur that eats poorly? A chew-ceratops.",
+  "Why did the river start therapy? It had too many emotional rapids.",
+  "What do you call someone who can't stop buying plants? A hoardeiculturist.",
+  "Why was the math student confused? Because algebra has too many ex's.",
+  "What do you call a rooster that wakes up early? Alarming.",
+  "Why was the broom chosen as team captain? It always swept the competition.",
+  "What do you call a man who only eats plants? Herb.",
+  "Why did the nurse use a pencil? To draw a conclusion.",
+  "What do you call a train that sneezes? Achoo-choo train.",
+  "Why did the volleyball team lose? They set themselves up for failure.",
+  "What do you call a belt with a watch? A waist of time.",
+  "Why did the cloud break up with the fog? It was too clingy.",
+  "What do you call an angry bee? A grumble bee.",
+  "Why don't mountains fight? Because they always get over it.",
+  "What do you call a fancy egg? Eggs-quisite.",
+  "Why did the hammer go to school? It wanted to nail the test.",
+  "What do you call a clock that only tells time twice a day? Right.",
+  "Why did the spider become a web developer? He had experience.",
+  "What do you call a nervous witch? A spell-check.",
+  "Why did the pirate go to therapy? He had some serious anchor issues.",
+  "What do you call a blind reindeer? No-eye deer.",
+  "Why did the mirror go to therapy? It had too many reflections.",
+  "What do you call a party thrown by cheese? A brie-union.",
+  "Why did the submarine go to school? To get a little depth of knowledge.",
+  "What do you call a fat psychic? A four-chin teller. (encore)",
+  "Why was the bank robber so good at art? He could draw a crowd.",
+  "What do you call a bear on a motorbike? A grrrreat ride.",
+  "Why did the bee get an A in school? Because it was a bee-liever.",
+  "What do you call a duck who loves fireworks? A fire-quacker.",
+  "Why did the cat get an A in music? Because it was purr-fect.",
+  "What do you call a pig that does yoga? Ham-string.",
+  "Why did the cloud become a chef? It loved making everything drizzle.",
+  "What do you call a laughing book? A jest volume.",
+  "Why did the tree lose the election? It didn't have enough branches of support.",
+  "What do you call a sad robot? Cry-droid.",
+  "Why did the letter A feel lonely? Because B was always two steps behind.",
+  "What do you call a French man in sandals? Philippe Phillop.",
+  "Why did the astronaut break up on the moon? He needed more space.",
+  "What do you call a kangaroo that works out? A jump-er built.",
+  "Why did the tomato go out with a prune? Because he couldn't find a date.",
+  "What do you call a shoe company run by cats? Puma, obviously.",
+  "Why did the scarecrow get a Ph.D.? He was outstanding in his field of study.",
+  "What do you call two birds in love? Tweet-hearts.",
+  "Why did the compass graduate top of the class? It always knew its direction.",
+  "What do you call a man who never farts in public? A private tutor.",
+  "Why did the egg feel embarrassed? Because it cracked under peer pressure.",
+  "What do you call a very artistic cow? A moo-sterpiece creator.",
+  "Why did the watch go to school? To learn how to keep time.",
+  "What do you call a potato in a space suit? An astro-tuber.",
+  "Why was the ghost good at lying? Because you could never see through him. Wait—",
+  "What do you call a really tall fairy? A high fairy.",
+  "Why did the sun go to school? To get a little brighter.",
+  "What do you call a sneaky vegetable? A sneak-chini.",
+  "Why don't mountains ever lose? Because they always peak at the right moment.",
+  "What do you call a man holding a leaf? Russell.",
+  "Why did the lion lose at poker? Because he was playing with a cheetah.",
+  "What do you call a quiet bear? Minimalibear.",
+  "Why did the crayon feel sad? Because it was feeling blue.",
+  "What do you call a smiling jar of mustard? Dijon-ighted.",
+  "Why don't secrets last in a bank? There are too many tellers.",
+  "What do you call a man with a spade? Doug.",
+  "Why did the shark cross the ocean? To get to the other tide.",
+  "What do you call a bee that comes from America? A USB. (version 2)",
+  "Why can't you trust an atom? Because they literally make up everything.",
+  "What do you call a sleeping bull on the moon? A lunar-dozer.",
+  "Why did the sun go to the beach? To get a tan.",
+  "What do you call a smug runway model? Runway vain.",
+  "Why did the nut go to school? To become a little more refined. Almond say.",
+  "What do you call a zombie who writes poetry? Dead Poe-t.",
+  "Why did the bicycle find philosophy hard? Because it was two-tired of thinking.",
+  "What do you call an octopus who works at a car wash? Doctor Sucker.",
+  "Why did the bucket list feel sad? It just had too many things to do before it kicked it.",
+  "What do you call a retired vegetable? A has-bean.",
+  "Why did the music stop during a thunderstorm? Too much lightning bolt.",
+  "What do you call a snowman's dog? A slush puppy.",
+  "Why did the egg feel philosophical? Because it came before the chicken — maybe.",
+  "What do you call a very loud trumpet player? Obnox-ious.",
+  "Why did the telephone break up with the laptop? Too many attachments.",
+  "What do you call a fashionable skeleton? Bone Chic.",
+  "Why did the coffee go to the police? It was mugged every single morning."
+];
+
+let jokeIndex = 0;
+
+function showJoke(i) {
+  const el = document.getElementById('jokeText');
+  el.classList.add('fade');
+  setTimeout(() => {
+    el.textContent = jokes[i];
+    el.classList.remove('fade');
+  }, 280);
+}
+function nextJoke() { jokeIndex = (jokeIndex + 1) % jokes.length; showJoke(jokeIndex); }
+function prevJoke() { jokeIndex = (jokeIndex - 1 + jokes.length) % jokes.length; showJoke(jokeIndex); }
+function randomJoke() { jokeIndex = Math.floor(Math.random() * jokes.length); showJoke(jokeIndex); }
+
+// ── PANDA FACTS ──
+const pandaFacts = [
+  "Giant pandas are native to central China, primarily in Sichuan, Shaanxi, and Gansu provinces.",
+  "Despite being classified as carnivores, 99% of a giant panda's diet consists of bamboo.",
+  "A giant panda must eat 12–38 kg (26–84 lbs) of bamboo every single day to meet its energy needs.",
+  "Pandas have a special 'false thumb' — an enlarged, elongated wrist bone that acts as a sixth digit to grip bamboo.",
+  "Giant pandas spend 10–16 hours a day eating, largely due to bamboo's low nutritional value.",
+  "A newborn giant panda weighs only 85–140 grams (3–5 oz) — about 1/900th the size of its mother.",
+  "Baby pandas are born pink, blind, and essentially helpless, covered in a sparse layer of white fur.",
+  "Giant pandas do not hibernate, unlike most other bear species.",
+  "The black-and-white coloring of giant pandas may help with camouflage in both snowy and shadowed forest environments.",
+  "According to research, panda eye patches may also help them recognize other pandas and communicate mood.",
+  "Giant pandas are excellent climbers and will scale trees to avoid predators or find mates.",
+  "Despite their size, giant pandas are strong swimmers.",
+  "Wild giant pandas typically live 15–20 years; those in captivity can live over 30 years.",
+  "The oldest giant panda in captivity, Jia Jia, lived to be 38 years old.",
+  "Giant pandas have a bite force of approximately 1300 Newtons — powerful enough to crush bamboo stalks.",
+  "Pandas are typically solitary animals in the wild, each occupying their own territory of 4–6 km².",
+  "Giant pandas communicate through vocalizations including bleats, honks, barks, and huffs.",
+  "Scent marking is a primary communication method for giant pandas — they rub trees, rocks, and shrubs with musk glands.",
+  "The scientific name for the giant panda is Ailuropoda melanoleuca, meaning 'black-and-white cat-foot.'",
+  "Giant pandas are classified as bears (family Ursidae), not raccoons, as was once debated.",
+  "The red panda (Ailurus fulgens) is not closely related to the giant panda; it belongs to its own family, Ailuridae.",
+  "Giant pandas were once widespread across eastern and southern China, and even into Myanmar and Vietnam.",
+  "Wild giant pandas are found in six mountain ranges in central China: Qinling, Minshan, Qionglai, Daxiangling, Xiaoxiangling, and Liangshan.",
+  "The Qinling subspecies of giant panda (Ailuropoda melanoleuca qinlingensis) has brown and white coloring instead of black and white.",
+  "As of 2021, the wild giant panda population is estimated at around 1,864 individuals.",
+  "Giant pandas were downlisted from 'Endangered' to 'Vulnerable' on the IUCN Red List in 2016.",
+  "China's panda diplomacy — lending pandas to foreign zoos — dates back to the Tang Dynasty (7th century).",
+  "Modern 'Panda diplomacy' began in 1972 when China gifted two pandas to the United States following Nixon's visit.",
+  "Panda loan agreements with China typically cost zoos around $1 million USD per year per panda.",
+  "Any cubs born to pandas on loan abroad belong to China, no matter where they are born.",
+  "Giant pandas reach sexual maturity between 4–8 years of age.",
+  "Female pandas are only fertile for 24–72 hours per year, making reproduction extremely challenging.",
+  "Giant pandas are among the rarest animals on Earth, with low reproductive rates being a major factor.",
+  "Pandas in captivity are sometimes shown 'panda porn' — videos of other pandas mating — to encourage breeding behavior.",
+  "Giant panda cubs are nursed by their mothers for 8–9 months before being fully weaned.",
+  "Mother pandas typically give birth to one or two cubs, but rarely raise both — usually only the stronger cub survives in the wild.",
+  "In captivity, zookeepers sometimes raise twin panda cubs by alternating them in front of their mother.",
+  "Wild pandas have few natural predators, but young cubs can be threatened by leopards, jackals, and yellow-throated martens.",
+  "Giant pandas do not roar — they bleat like sheep or make a goat-like 'baa' sound.",
+  "When happy, giant pandas often perform somersaults and other playful rolls.",
+  "Pandas mark their territory by doing 'handstands' against trees to rub scent as high up as possible.",
+  "Giant pandas can communicate over long distances by leaving scent on trees.",
+  "Pandas prefer to sleep in trees when not eating, and young pandas are particularly tree-loving.",
+  "A panda's skull is round and broad, housing the large jaw muscles needed to chew bamboo.",
+  "Pandas have large sagittal crests (ridges on top of their skulls) that anchor powerful chewing muscles.",
+  "The eye patches on pandas are unique to each individual — no two are exactly alike.",
+  "Pandas have thick, oily fur that helps insulate them against cold mountain temperatures.",
+  "The panda's digestive system is still more like a carnivore's than an herbivore's, which is why they digest bamboo so inefficiently.",
+  "Pandas only digest about 17% of the bamboo they eat; most passes through as waste.",
+  "A panda produces up to 40 kg of droppings every day due to their bamboo-heavy diet.",
+  "Pandas have evolved to prefer certain bamboo species over others, and will travel far to find their favourites.",
+  "When one bamboo species flowers and dies off, pandas must migrate to find another species — a difficult journey.",
+  "The Wolong National Nature Reserve in Sichuan is one of the largest panda conservation centres in China.",
+  "China has more than 60 panda reserves that protect over 67% of the wild giant panda population.",
+  "Giant pandas in captivity often eat sugar cane, carrots, apples, and specially prepared 'panda cake' (made of rice, corn, soybeans, and minerals).",
+  "Beijing Zoo was the first zoo outside China to receive a giant panda, in 1957.",
+  "In the wild, pandas are most active at dawn and dusk — they're crepuscular animals.",
+  "Giant pandas' eyes have vertically slit pupils, much like cats — unique among bears.",
+  "A panda's gestation period is 95–160 days, though much of this is due to delayed implantation of the embryo.",
+  "The sound a contented panda makes is often compared to the sound of a goat or a lamb.",
+  "Giant pandas are considered a national treasure in China and are legally protected from poaching (a crime punishable by death in China).",
+  "Fossil records show panda-like creatures existed 2–3 million years ago.",
+  "The dwarf giant panda (Ailuropoda microta) was a prehistoric ancestor of the modern giant panda.",
+  "Pandas were described in Western science for the first time by French missionary and naturalist Père David in 1869.",
+  "The World Wildlife Fund (WWF) adopted the giant panda as its logo in 1961.",
+  "China's breeding programs have been highly successful — the captive population now exceeds 600 individuals.",
+  "The Chengdu Research Base of Giant Panda Breeding has bred over 200 pandas since its founding in 1987.",
+  "Researchers use 'panda suits' — costumes doused in panda scent — when handling cubs to prevent them from becoming too familiar with humans.",
+  "Giant panda milk is similar to that of other bears: high in fat and protein, helping cubs grow rapidly.",
+  "Panda cubs open their eyes at around 6–8 weeks of age.",
+  "By 3 months, panda cubs start developing their iconic black-and-white coloring.",
+  "Wild giant pandas are rarely observed directly, as they are shy, solitary, and live in dense forests.",
+  "Giant pandas don't store fat like most bears because bamboo is available year-round in their habitat.",
+  "Their mountain habitat ranges from 1,200 to 4,100 metres above sea level.",
+  "Giant pandas have been known to eat over 20 species of bamboo, though they have strong preferences.",
+  "Researchers track wild pandas using GPS collars and camera traps embedded in their forest habitat.",
+  "The stomach of a giant panda is unusually muscular and lined with a thick mucus coating to handle bamboo splinters.",
+  "China's panda population has increased by 17% over the last decade, largely due to conservation efforts.",
+  "Giant pandas can walk both on all fours and stand briefly on their hind legs.",
+  "When born, giant panda cubs are roughly 1/800 the size of their mothers — one of the smallest newborn-to-adult size ratios in mammals.",
+  "Pandas have been part of Chinese culture for thousands of years and appear in ancient texts and artwork.",
+  "DNA analysis has confirmed that giant pandas diverged from other bears about 19 million years ago.",
+  "The giant panda's genome was first fully sequenced in 2009, revealing key insights into its biology and evolution."
+];
+
+let pandaIndex = 0;
+
+function showPanda(i) {
+  const el = document.getElementById('pandaText');
+  const counter = document.getElementById('pandaCounter');
+  el.classList.add('fade');
+  setTimeout(() => {
+    el.textContent = pandaFacts[i];
+    counter.textContent = `Fact #${i+1} of ${pandaFacts.length}`;
+    el.classList.remove('fade');
+  }, 280);
+}
+function nextPanda() { pandaIndex = (pandaIndex + 1) % pandaFacts.length; showPanda(pandaIndex); }
+function prevPanda() { pandaIndex = (pandaIndex - 1 + pandaFacts.length) % pandaFacts.length; showPanda(pandaIndex); }
+function randomPanda() { pandaIndex = Math.floor(Math.random() * pandaFacts.length); showPanda(pandaIndex); }
+
+// Init
+showJoke(0);
+showPanda(0);
+</script>
+</body>
+</html>
